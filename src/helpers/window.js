@@ -5,6 +5,7 @@
 
 import { app, BrowserWindow, screen } from "electron";
 import jetpack from "fs-jetpack";
+import log from "electron-log";
 
 export default (name, options) => {
   const userDataDir = jetpack.cwd(app.getPath("userData"));
@@ -23,6 +24,8 @@ export default (name, options) => {
     } catch (err) {
       // For some reason json can't be read (might be corrupted).
       // No worries, we have defaults.
+      // Log url arguments
+      log.info(`Load window state file ${stateStoreFile} error`, e);
     }
     return Object.assign({}, defaultSize, restoredState);
   };
